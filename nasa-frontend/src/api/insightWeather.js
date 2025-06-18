@@ -1,0 +1,12 @@
+import axios from 'axios';
+
+const BASE_URL = '/api'; 
+
+export const getInsightWeather = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/insight_weather`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message || 'Failed to fetch weather data');
+  }
+};
