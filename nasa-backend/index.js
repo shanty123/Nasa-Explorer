@@ -7,22 +7,10 @@ const nasaRoutes = require('./routes/nasa');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
-const allowedOrigins = [
-  'https://nasa-explorer-a4qo-71dd8pn2p-shanty-shabus-projects.vercel.app',
-  'http://localhost:5173'
-];
-
-
+// Use cors with specific origin
 app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  }
+  origin: 'https://nasa-explorer-a4qo-nt3f2pn72-shanty-shabus-projects.vercel.app',
+  credentials: true
 }));
 
 // Use routes
