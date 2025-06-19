@@ -4,13 +4,12 @@ require('dotenv').config();
 
 const nasaRoutes = require('./routes/nasa');
 
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Use cors with specific origin
 app.use(cors({
-  origin: 'https://nasa-explorer-a4qo-nt3f2pn72-shanty-shabus-projects.vercel.app',
-  credentials: true
+  origin: 'https://nasa-explorer-a4qo.vercel.app/'
 }));
 
 // Use routes
