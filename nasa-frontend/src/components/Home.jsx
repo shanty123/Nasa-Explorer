@@ -16,7 +16,7 @@ import WindFilter from './Filter/SelectFilter';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: 'rgb(0 0 0 / 29%)',
   borderRadius: 8,
- minWidth:'11rem',
+   minWidth:'11rem',
   border: '1px solid rgba(179, 157, 157, 0.14)',
   padding: theme.spacing(4),
   textAlign: 'center',
@@ -47,7 +47,9 @@ const handleFilterChange = useCallback((value) => {
   setSelectFilter(value);
 }, []);
 
- const graphdata = weatherData? Object.entries(weatherData).filter(([sol,data]) =>{
+ const graphdata = weatherData? Object.entries(weatherData).filter(([key]) =>
+   key !== 'sol_keys' && key !== 'validity_checks')
+ .filter(([sol,data]) =>{
           const wind = data.HWS?.av;
           if (selectFilter === 'WL6') return wind < 6;
           if (selectFilter === 'WG6') return wind >= 6;
@@ -61,7 +63,7 @@ const handleFilterChange = useCallback((value) => {
           WindSpeed: data.HWS?.av,
         }))
     : [];
-console.log("graphdata",graphdata);
+
 
 
   if (loading)

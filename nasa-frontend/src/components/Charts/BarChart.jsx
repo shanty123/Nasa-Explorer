@@ -1,5 +1,4 @@
 import React,{useEffect,useState} from 'react';
-import { getInsightWeather } from '../../api/insightWeather';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
@@ -19,30 +18,26 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 
-const BarGraph = () =>{
-const [weatherData,setWeatherData] = useState(null);
+const BarGraph = ({barGraphData}) =>{
+const [weatherData,setWeatherData] = useState(barGraphData);
 
  useEffect(() => {
-    getInsightWeather()
-      .then(data => {
-        setWeatherData(data);
-        console.log("data", data);
-      })
-      .catch(err => console.log("error in fetching data",err));
-  }, []);   
-const graphData = weatherData? Object.entries(weatherData).map(([sol,data]) => ({
- sol: `Sol ${sol}`,
+     setWeatherData(barGraphData);
+  }, [barGraphData]);  
+
+const graphData = weatherData? Object.entries(weatherData).filter(([key]) =>key !== 'sol_keys' && key !== 'validity_checks')
+.map(([sol,data]) => ({
+ sol: `${sol}`,
   temperature: data.AT?.av
 }))
 :[];
-
 
     return(
 <Grid container spacing={3}>
   <Grid item xs={12} md={6}>
 <Item>
     <h3>Sol vs Temperature</h3>
-    <ResponsiveContainer width="100%" minWidth={400} height={250}>
+    <ResponsiveContainer width="100%" minWidth={400} height={200}>
 <BarChart data={graphData}  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}  barCategoryGap="20%">
 
 <CartesianGrid strokeDasharray="3 3"/>

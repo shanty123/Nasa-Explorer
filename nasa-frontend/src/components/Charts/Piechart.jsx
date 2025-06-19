@@ -8,7 +8,7 @@ import Slider from '@mui/material/Slider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { getInsightWeather } from '../../api/insightWeather';
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
@@ -20,19 +20,16 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 
-const PieGraph = () => {
-  const [weatherData, setWeatherData] = useState(null);
+const PieGraph = ({pieGraphData}) => {
+  const [weatherData, setWeatherData] = useState(pieGraphData);
   const [radius, setRadius] = useState(50);
   const [itemNb, setItemNb] = useState(7);
   const [skipAnimation, setSkipAnimation] = useState(false);
 
+
   useEffect(() => {
-    getInsightWeather()
-      .then(data => {
-        setWeatherData(data);
-      })
-      .catch(err => console.log("error in fetching data",err));
-  }, []);
+     setWeatherData(pieGraphData);
+  }, [pieGraphData]);
 
   const pieData = {};
   if (weatherData) {

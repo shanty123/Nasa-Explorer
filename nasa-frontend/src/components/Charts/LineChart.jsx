@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { getInsightWeather } from '../../api/insightWeather';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
@@ -18,20 +17,19 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 
-const LineGraph = () => {
-  const [weatherData, setWeatherData] = useState(null);
+const LineGraph = ({lineGraphData}) => {
+
+  const [weatherData, setWeatherData] = useState(lineGraphData);
 
 
   useEffect(() => {
-    getInsightWeather()
-      .then(data => {
-        setWeatherData(data);
-      })
-      .catch(err => console.log("error in fetching data",err));
-  }, []);
+     setWeatherData(lineGraphData);
+  }, [lineGraphData]);
+
 
   const graphData = weatherData
-    ? Object.entries(weatherData).map(([sol, data]) => ({
+    ? Object.entries(weatherData).filter(([key]) =>key !== 'sol_keys' && key !== 'validity_checks')
+    .map(([sol,data]) => ({
         sol,
         temp: data.AT?.av ?? null,
         wind: data.HWS?.av ?? null,
@@ -42,10 +40,10 @@ const LineGraph = () => {
   return (
    
       <Grid container spacing={3}>
-  <Grid item xs={12} md={6}>
+  <Grid item xs={12} md={4}>
           <Item>
             <h3>Average Temperature (°C)</h3>
-            <ResponsiveContainer width="100%" height={250}>
+            <ResponsiveContainer width="100%" height={200}>
               <LineChart data={graphData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="sol" />
@@ -61,7 +59,7 @@ const LineGraph = () => {
         <Grid item xs={12} md={4}>
           <Item>
             <h3>Average Wind Speed (m/s)</h3>
-            <ResponsiveContainer width="100%" height={250}>
+            <ResponsiveContainer width="100%" height={200}>
               <LineChart data={graphData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="sol" />
@@ -77,7 +75,7 @@ const LineGraph = () => {
         <Grid item xs={12} md={4}>
           <Item>
             <h3>Average Pressure (Pa)</h3>
-            <ResponsiveContainer width="100%" height={250}>
+            <ResponsiveContainer width="100%" height={200}>
               <LineChart data={graphData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="sol" />
