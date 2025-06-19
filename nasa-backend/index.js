@@ -9,7 +9,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: 'https://nasa-explorer-a4qo.vercel.app/'
+  origin: 'https://nasa-explorer-a4qo.vercel.app',
+    credentials: true,
 }));
 
 // Use routes
