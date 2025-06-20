@@ -1,93 +1,82 @@
 import React, { useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import { Typography, Box } from '@mui/material';
+
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
   ...theme.typography.body2,
-  padding: theme.spacing(2),
+   padding: theme.spacing(2),
   textAlign: 'center',
-  color: (theme.vars ?? theme).palette.text.secondary,
-  ...theme.applyStyles?.('dark', {
-    backgroundColor: '#1A2027',
-  }),
+  color: theme.palette.text.secondary,
 }));
 
-const LineGraph = ({lineGraphData}) => {
+const LineChartBox = ({ title, dataKey, color, data }) => (
+  <Box sx={{ width: '100%', height: 250 }}>
+    <Typography variant="subtitle1" align="center" gutterBottom>
+      {title}
+    </Typography>
+    <ResponsiveContainer width="100%" height="85%">
+      <LineChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="sol" />
+        <YAxis />
+        <Tooltip />
+        <Line type="monotone" dataKey={dataKey} stroke={color} />
+      </LineChart>
+    </ResponsiveContainer>
+  </Box>
+);
 
-  const [weatherData, setWeatherData] = useState(lineGraphData);
-
+const LineGraph = ({ lineGraphData }) => {
+  const [graphData, setGraphData] = useState();
 
   useEffect(() => {
-     setWeatherData(lineGraphData);
+    if (lineGraphData) {
+      const parsed = Object.entries(lineGraphData)
+        .filter(([key]) => key !== 'sol_keys' && key !== 'validity_checks')
+        .map(([sol, data]) => ({
+          sol,
+          temp: data.AT?.av ?? null,
+          wind: data.HWS?.av ?? null,
+          pressure: data.PRE?.av ?? null,
+        }));
+      setGraphData(parsed);
+    }
   }, [lineGraphData]);
 
-
-  const graphData = weatherData
-    ? Object.entries(weatherData).filter(([key]) =>key !== 'sol_keys' && key !== 'validity_checks')
-    .map(([sol,data]) => ({
-        sol,
-        temp: data.AT?.av ?? null,
-        wind: data.HWS?.av ?? null,
-        pressure: data.PRE?.av ?? null,
-      }))
-    : [];
-
   return (
-   
-      <Grid container spacing={3}>
-  <Grid item xs={12} md={4}>
-          <Item>
-            <h3>Average Temperature (°C)</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={graphData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="sol" />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="temp" stroke="#8884d8" />
-              </LineChart>
-            </ResponsiveContainer>
-          </Item>
-        </Grid>
-
-        {/* Chart 2: Wind Speed */}
-        <Grid item xs={12} md={4}>
-          <Item>
-            <h3>Average Wind Speed (m/s)</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={graphData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="sol" />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="wind" stroke="#82ca9d" />
-              </LineChart>
-            </ResponsiveContainer>
-          </Item>
-        </Grid>
-
-        {/* Chart 3: Pressure */}
-        <Grid item xs={12} md={4}>
-          <Item>
-            <h3>Average Pressure (Pa)</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={graphData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="sol" />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="pressure" stroke="#ff7300" />
-              </LineChart>
-            </ResponsiveContainer>
-          </Item>
-        </Grid>
-      </Grid>
-
+    <Item sx={{ display: 'flex', flexWrap: 'wrap' }}>
+      <Box sx={{ flex: 1, minWidth: 300 }}>
+        <LineChartBox
+          title="Average Temperature (°C)"
+          dataKey="temp"
+          color="#8884d8"
+          data={graphData}
+        />
+      </Box>
+      <Box sx={{ flex: 1, minWidth: 300 }}>
+        <LineChartBox
+          title="Average Wind Speed (m/s)"
+          dataKey="wind"
+          color="#82ca9d"
+          data={graphData}
+        />
+      </Box>
+      <Box sx={{ flex: 1, minWidth: 300 }}>
+        <LineChartBox
+          title="Average Pressure (Pa)"
+          dataKey="pressure"
+          color="#ff7300"
+          data={graphData}
+        />
+      </Box>
+    </Item>
   );
 };
 

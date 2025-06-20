@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import Grid from '@mui/material/Grid';
+import {Box,Typography} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import {
@@ -33,10 +33,10 @@ const graphData = weatherData? Object.entries(weatherData).filter(([key]) =>key 
 :[];
 
     return(
-<Grid container spacing={3}>
-  <Grid item xs={12} md={6}>
-<Item>
-    <h3>Sol vs Temperature</h3>
+ <Item>
+      <Typography variant="subtitle1" gutterBottom align="center">
+        Sol vs Temperature
+      </Typography>
     <ResponsiveContainer width="100%" minWidth={400} height={200}>
 <BarChart data={graphData}  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}  barCategoryGap="20%">
 
@@ -47,9 +47,8 @@ const graphData = weatherData? Object.entries(weatherData).filter(([key]) =>key 
         <Bar dataKey="temperature" fill="#1976d2" />
 </BarChart>
     </ResponsiveContainer>
+
 </Item>
-</Grid>
-</Grid>
     )
 }
 export default BarGraph;
