@@ -93,7 +93,7 @@ Filter cards based on a minimum wind speed threshold.
 
 Helps users focus on high-wind days for comparison.
 
-## APOD - NASA Astronomy Picture of the Day
+### APOD - NASA Astronomy Picture of the Day
 
 NASA APOD Integration
 
