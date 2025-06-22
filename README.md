@@ -123,5 +123,21 @@ Multi-Graph Visualization
 
 📡 Radar Chart – Visualizes data for a latest Sol across multiple metrics.
 
+###  Chatbot Assistant (Home Page)
+
+Fixed-position Chatbot Icon on the bottom-right.
+
+On click, opens a popup chat interface.
+
+Provides basic interaction:
+
+* Responds with weather information of the latest Sol.
+
+* Displays temperature, wind speed, and pressure.
+
+* Purpose is to offer a quick summary without needing to scroll through the dashboard.
+
+
+
 
 
