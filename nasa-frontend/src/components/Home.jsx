@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import WindFilter from './Filter/SelectFilter';
-
+import Chatbot from './Chatbot/bot';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: 'rgb(0 0 0 / 29%)',
@@ -124,6 +124,7 @@ const handleFilterChange = useCallback((value) => {
           
         )}
       </Container>
+      <Chatbot weatherData={weatherData}/>
     </Box>
   );
 };
