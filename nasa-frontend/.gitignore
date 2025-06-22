@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +23,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Environment variables
+# Frontend
+nasa-frontend/.env
+nasa-frontend/.env.*
+
+# Backend
+nasa-backend/.env
+nasa-backend/.env.*
