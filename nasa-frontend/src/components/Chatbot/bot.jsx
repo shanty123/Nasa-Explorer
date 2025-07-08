@@ -107,6 +107,7 @@ const ChatBot = ({ weatherData }) => {
           zIndex: 999,
           borderRadius: 10,
           background: "white",
+          boxShadow: "0 0 15px 5px rgb(1, 1, 10)",
         }}
       >
         <IconButton

@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import WindFilter from './Filter/SelectFilter';
 import Chatbot from './Chatbot/bot';
+import { getApod } from '../api/apod';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: 'rgb(0 0 0 / 29%)',
@@ -27,21 +28,20 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const Home = () => {
+  const [apod, setApod] = useState();
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
    const [selectFilter, setSelectFilter] = useState("");
 
-
- useEffect(() => {
-    getInsightWeather()
-      .then(data => {
-        setWeatherData(data);
-      setLoading(false);
-      console.log("data",data);
-      })
-      .catch(err => console.log("error in fetching data",err));
-  }, []);  
-
+useEffect(() => {
+  Promise.all([getApod(), getInsightWeather()])
+    .then(([apodData, weatherData]) => {
+      setApod(apodData);
+      setWeatherData(weatherData);
+    })
+    .catch((err) => console.error("Error fetching data:", err))
+    .finally(() => setLoading(false));
+}, []);
 
 const handleFilterChange = useCallback((value) => {
   setSelectFilter(value);
@@ -83,7 +83,7 @@ const handleFilterChange = useCallback((value) => {
   return (
     <Box
       sx={{
-        backgroundImage: "url('/marsBackground.jpg')",
+        backgroundImage:apod?.media_type === "image" ? `url(${apod.url})` :  "url('/marsBackground.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: 'auto',
