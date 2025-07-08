@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Box, Card, CardContent, Typography } from '@mui/material';
+import { Grid, Box, Card, CardContent, Typography, useMediaQuery } from '@mui/material';
 import LineGraph from './Charts/LineChart';
 import PieGraph from './Charts/Piechart';
 import BarGraph from './Charts/BarChart';
 import RadarGraph from './Charts/RadarChart';
 import { getInsightWeather } from '../api/insightWeather';
+import { useTheme } from '@mui/material/styles';
 
 const SmallInfoBox = ({ title, content }) => (
   <Card sx={{ backgroundColor: '#fff', color: 'black',minWidth:"20rem" }}>
@@ -20,6 +21,10 @@ const Dashboard = () => {
   const [currentSolData, setCurrentSolData] = useState(null);
   const [latestSolNumber, setLatestSolNumber] = useState(null);
 
+  
+ const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md')); // 'md' is typically 960px
+
   useEffect(() => {
     getInsightWeather()
       .then(data => setWeatherData(data))
@@ -34,6 +39,16 @@ const Dashboard = () => {
       setCurrentSolData(weatherData[currentSol]);
     }
   }, [weatherData]);
+  
+ if (isSmallScreen) {
+    return (
+      <Box sx={{ p: 4, textAlign: 'center' }}>
+        <Typography variant="h6" color="textSecondary">
+          📱 This dashboard is best viewed on a desktop or larger screen.
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ flexGrow: 1, p: 2 }}>
