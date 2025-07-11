@@ -73,6 +73,9 @@ This project is **live** on Vercel!
 
 ## Project Structure
  ### Home Page – Insight Mars 
+ 
+Displays NASA's Astronomy Picture of the Day as the background image. Clicking on the image navigates to a detailed description.
+
 📅 Sol Details Overview
 
 Displays a series of cards showing weather metrics for each Martian Sol (solar day).
@@ -131,7 +134,7 @@ On click, opens a popup chat interface.
 
 Provides basic interaction:
 
-* Responds with weather information of the latest Sol.
+* Responds with weather information of the each Sol.
 
 * Displays temperature, wind speed, and pressure.
 
