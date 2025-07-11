@@ -1,10 +1,10 @@
 // src/App.jsx
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Dashboard from './components/Dashboard';
-import Home from './components/Home';
-import Apod from './components/Media';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Dashboard from "./components/Dashboard";
+import Home from "./components/Home";
+import Apod from "./components/Media";
 
 const App = () => {
   return (
@@ -17,7 +17,11 @@ const App = () => {
           <Route path="/apod" element={<Apod />} />
           <Route
             path="*"
-            element={<div style={{ padding: 20, color: 'white' }}>404 - Page Not Found</div>}
+            element={
+              <div style={{ padding: 20, color: "white" }}>
+                404 - Page Not Found
+              </div>
+            }
           />
         </Routes>
       </div>

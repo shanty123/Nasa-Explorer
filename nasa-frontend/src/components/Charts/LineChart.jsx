@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
-} from 'recharts';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import { Typography, Box } from '@mui/material';
-
-
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import { styled } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
+import { Typography, Box } from "@mui/material";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: '#fff',
+  backgroundColor: "#fff",
   ...theme.typography.body2,
-   padding: theme.spacing(2),
-  textAlign: 'center',
+  padding: theme.spacing(2),
+  textAlign: "center",
   color: theme.palette.text.secondary,
 }));
 
 const LineChartBox = ({ title, dataKey, color, data }) => (
-  <Box sx={{ width: '100%', height: 250 }}>
+  <Box sx={{ width: "100%", height: 250 }}>
     <Typography variant="subtitle1" align="center" gutterBottom>
       {title}
     </Typography>
@@ -39,7 +43,7 @@ const LineGraph = ({ lineGraphData }) => {
   useEffect(() => {
     if (lineGraphData) {
       const parsed = Object.entries(lineGraphData)
-        .filter(([key]) => key !== 'sol_keys' && key !== 'validity_checks')
+        .filter(([key]) => key !== "sol_keys" && key !== "validity_checks")
         .map(([sol, data]) => ({
           sol,
           temp: data.AT?.av ?? null,
@@ -51,7 +55,7 @@ const LineGraph = ({ lineGraphData }) => {
   }, [lineGraphData]);
 
   return (
-    <Item sx={{ display: 'flex', flexWrap: 'wrap' }}>
+    <Item sx={{ display: "flex", flexWrap: "wrap" }}>
       <Box sx={{ flex: 1, minWidth: 300 }}>
         <LineChartBox
           title="Average Temperature (°C)"

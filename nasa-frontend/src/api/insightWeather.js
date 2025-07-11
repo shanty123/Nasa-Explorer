@@ -1,13 +1,21 @@
-import axios from 'axios';
+import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+const apiClient = axios.create({
+  baseURL: BASE_URL,
+  timeout: 10000,
+});
 
 export const getInsightWeather = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/insight_weather`);
+    const response = await apiClient.get("/insight_weather");
     return response.data;
   } catch (error) {
-    throw new Error(error.message || 'Failed to fetch weather data');
+    const message =
+      error.response?.data?.error ||
+      error.message ||
+      "Failed to fetch weather data";
+    throw new Error(message);
   }
 };

@@ -182,32 +182,36 @@ const ChatBot = ({ weatherData }) => {
             ))}
 
             {/*chip buttons*/}
-            <Box sx={{ backgroundColor: "#f1f1f1",
-                  color: "#000", borderRadius: 2,  display: "inline-block", px: 1.5,
-                  py: 1.5,}}>
-              <Typography
-                variant="body2"
-              >
+            <Box
+              sx={{
+                backgroundColor: "#f1f1f1",
+                color: "#000",
+                borderRadius: 2,
+                display: "inline-block",
+                px: 1.5,
+                py: 1.5,
+              }}
+            >
+              <Typography variant="body2">
                 Hi Choose any sol for know more about the weather data
-              
               </Typography>
-                <Stack
-                  direction="row"
-                  gap={1}
-                  flexWrap="wrap"
-                  sx={{ display: "inline-flex", marginTop: "4px" }}
-                >
-                  {weatherData?.sol_keys.map((item, index) => (
-                    <Chip
-                      label={`Sol ${item}`}
-                      key={index}
-                      variant={index !== chipSelect ? "outlined" : "filled"}
-                      onClick={() => {
-                        handleClick(item, index);
-                      }}
-                    />
-                  ))}
-                </Stack>
+              <Stack
+                direction="row"
+                gap={1}
+                flexWrap="wrap"
+                sx={{ display: "inline-flex", marginTop: "4px" }}
+              >
+                {weatherData?.sol_keys.map((item, index) => (
+                  <Chip
+                    label={`Sol ${item}`}
+                    key={index}
+                    variant={index !== chipSelect ? "outlined" : "filled"}
+                    onClick={() => {
+                      handleClick(item, index);
+                    }}
+                  />
+                ))}
+              </Stack>
             </Box>
             <div ref={messagesEndRef} />
           </Box>
