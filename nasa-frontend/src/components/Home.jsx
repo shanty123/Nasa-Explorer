@@ -13,6 +13,8 @@ import Paper from '@mui/material/Paper';
 import WindFilter from './Filter/SelectFilter';
 import Chatbot from './Chatbot/bot';
 import { getApod } from '../api/apod';
+import { useNavigate } from 'react-router-dom';
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: 'rgb(0 0 0 / 29%)',
@@ -28,14 +30,19 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const Home = () => {
+
+  const navigate = useNavigate();
+
   const [apod, setApod] = useState();
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
    const [selectFilter, setSelectFilter] = useState("");
+const [isHovering, setIsHovering] = useState(false);
 
 useEffect(() => {
   Promise.all([getApod(), getInsightWeather()])
     .then(([apodData, weatherData]) => {
+      console.log("data",weatherData);
       setApod(apodData);
       setWeatherData(weatherData);
     })
@@ -82,7 +89,18 @@ const handleFilterChange = useCallback((value) => {
 
   return (
     <Box
+    onClick={(e) => {
+    if (e.target === e.currentTarget) {
+      navigate('/apod');
+    }
+  }}
+  onMouseMove={(e) => {
+    if (e.target === e.currentTarget) setIsHovering(true);
+    else setIsHovering(false);
+  }}
+  onMouseLeave={() => {setIsHovering(false)}}
       sx={{
+       position: 'relative',
         backgroundImage:apod?.media_type === "image" ? `url(${apod.url})` :  "url('/marsBackground.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -90,8 +108,28 @@ const handleFilterChange = useCallback((value) => {
         minHeight:'100vh',
         pt: 2,
         pb: 2,
+       cursor: isHovering ? 'url("/search.png") 13 13, auto' : 'default',
       }}
     >
+{isHovering &&(
+  <Box
+    sx={{
+      position: 'absolute',
+      top: 16,
+      right: 16,
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      color: 'white',
+      px: 2,
+      py: 1,
+      borderRadius: 2,
+      fontSize: '0.9rem',
+      boxShadow: 3,
+      zIndex: 1000,
+    }}
+  >
+    Click for more info about the image
+  </Box>
+)}
       <Container maxWidth="md">
         <Typography
           variant="h4"
