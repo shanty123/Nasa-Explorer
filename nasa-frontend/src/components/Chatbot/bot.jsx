@@ -122,15 +122,14 @@ const ChatBot = ({ weatherData }) => {
           onClick={toggleChat}
           aria-label={isOpen ? "Close chat" : "Open chat"}
         >
-          <InsertCommentIcon
-            sx={{
-              height: "2.5rem",
-              width: "2.5rem",
-              color: "#fff",
-            }}
-          />
+          <InsertCommentIcon sx={{ fontSize: 30, color: "#fff" }} />
           <Typography
-            sx={{ color: "white", fontSize: "0.95rem", fontWeight: 500 }}
+            sx={{
+              color: "white",
+              fontSize: { xs: "0.85rem", sm: "0.95rem" },
+              fontWeight: 500,
+              display: { xs: "none", sm: "inline" },
+            }}
           >
             Talk to me
           </Typography>
@@ -144,7 +143,7 @@ const ChatBot = ({ weatherData }) => {
           sx={{
             position: "fixed",
             bottom: 80,
-            right: 20,
+            right:10,
             width: { xs: "90vw", sm: 320 },
             height: { xs: "50vh", sm: 400 },
             display: "flex",
