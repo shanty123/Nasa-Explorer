@@ -7,10 +7,10 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import SmartToyIcon from "@mui/icons-material/SmartToy";
 import CloseIcon from "@mui/icons-material/Close";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import InsertCommentIcon from "@mui/icons-material/InsertComment";
 
 const ChatBot = ({ weatherData }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -105,9 +105,16 @@ const ChatBot = ({ weatherData }) => {
           bottom: 20,
           right: 20,
           zIndex: 999,
-          borderRadius: 10,
-          background: "white",
-          boxShadow: "0 0 15px 5px rgb(1, 1, 10)",
+          borderRadius: 8,
+          alignItems: "center",
+          gap: 1,
+          px: 1,
+          py: 1,
+          bgcolor: "rgba(0,0,0,0.7)",
+          transition: "background-color 0.3s",
+          "&:hover": {
+            bgcolor: "rgba(255, 255, 255, 0.2)",
+          },
         }}
       >
         <IconButton
@@ -115,13 +122,18 @@ const ChatBot = ({ weatherData }) => {
           onClick={toggleChat}
           aria-label={isOpen ? "Close chat" : "Open chat"}
         >
-          <SmartToyIcon
+          <InsertCommentIcon
             sx={{
-              height: "2rem",
-              width: "2rem",
-              color: "rgb(173 92 17 / 78%)",
+              height: "2.5rem",
+              width: "2.5rem",
+              color: "#fff",
             }}
           />
+          <Typography
+            sx={{ color: "white", fontSize: "0.95rem", fontWeight: 500 }}
+          >
+            Talk to me
+          </Typography>
         </IconButton>
       </Box>
 

@@ -158,7 +158,7 @@ const Home = () => {
           </Grid>
         )}
       </Container>
-      <Chatbot weatherData={weatherData} />
+      <Chatbot id="chatbot" weatherData={weatherData} />
     </Box>
   );
 };

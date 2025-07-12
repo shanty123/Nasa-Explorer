@@ -5,6 +5,7 @@ import { getApod } from "../api/apod";
 const Media = () => {
   const [apod, setApod] = useState();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     getApod()
@@ -12,7 +13,11 @@ const Media = () => {
         setApod(data);
         setLoading(false);
       })
-      .catch((err) => console.log("error fetching data", err));
+      .catch((err) => {
+        console.log("error fetching data", err);
+        setError("Failed to fetch APOD data");
+        setLoading(false);
+      });
   }, []);
 
   if (loading)
@@ -27,7 +32,13 @@ const Media = () => {
         <CircularProgress color="secondary" />
       </Box>
     );
-
+  if (error) {
+    return (
+      <Typography color="error" sx={{ p: 4 }}>
+        {error}
+      </Typography>
+    );
+  }
   if (!apod || !apod.url || apod.media_type !== "image") {
     return (
       <Typography variant="body1" sx={{ color: "white", p: 4 }}>
@@ -52,7 +63,7 @@ const Media = () => {
         <Box
           component="img"
           src={apod.url}
-          alt={apod.title}
+          alt={apod.title || "NASA APOD"}
           sx={{
             width: "100%",
             height: "auto",

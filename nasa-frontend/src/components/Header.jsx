@@ -75,6 +75,7 @@ const Header = () => {
           <IconButton
             color="default"
             edge="end"
+            aria-label="open navigation menu"
             onClick={handleDrawerToggle}
             sx={{ display: { xs: "block", sm: "none" } }}
           >
@@ -84,17 +85,41 @@ const Header = () => {
       </AppBar>
 
       {/* Mobile Drawer */}
-      <Drawer anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
+      <Drawer
+        anchor="right"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true,
+        }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.appBar + 2,
+        }}
+      >
         <Box
           sx={{ width: 250, bgcolor: "#10111f", height: "100%", color: "#fff" }}
           role="presentation"
           onClick={handleDrawerToggle}
         >
-          <Box sx={{ textAlign: "left", p: 2 }}>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              px: 2,
+              py: 1.5,
+              bgcolor: "#10111f",
+            }}
+          >
+            <Typography variant="h6" sx={{ fontWeight: "bold", color: "#fff" }}>
               NASA Explorer
             </Typography>
+
+            <IconButton onClick={handleDrawerToggle} sx={{ color: "#fff" }}>
+              <MenuIcon />
+            </IconButton>
           </Box>
+
           <List>
             {navItems.map((item) => (
               <ListItem key={item.label} disablePadding>
